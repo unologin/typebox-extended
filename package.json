@@ -1,0 +1,43 @@
+{
+  "name": "@unologin/typebox-extended",
+  "version": "0.0.1",
+  "description": "Extensions to @sinclair/typebox.",
+  "main": "lib/main.js",
+  "files": [
+    "lib/"
+  ],
+  "scripts": {
+    "test": "jest",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/unologin/typebox-extended.git"
+  },
+  "keywords": [
+    "typebox",
+    "extended",
+    "schema",
+    "typescript"
+  ],
+  "author": "Adrian Kriegel",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/unologin/typebox-extended/issues"
+  },
+  "homepage": "https://github.com/unologin/typebox-extended#readme",
+  "peerDependencies": {
+    "@sinclair/typebox": "^0.23.2"
+  },
+  "devDependencies": {
+    "@alex_neo/jest-expect-message": "^1.0.5",
+    "@types/jest": "^27.4.0",
+    "@typescript-eslint/eslint-plugin": "^5.9.1",
+    "@unologin/eslint-config": "^1.0.2",
+    "eslint": "^7.32.0",
+    "jest": "^27.4.7",
+    "ts-jest": "^27.1.2",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.5.4"
+  }
+}
