@@ -2,22 +2,7 @@
   "name": "@unologin/typebox-extended",
   "version": "0.0.1",
   "description": "Extensions to @sinclair/typebox.",
-  "main": "lib/main.js",
-  "files": [
-    "lib/"
-  ],
-  "exports": 
-  {
-    "./typebox": "./lib/typebox.js"
-  },
-  "typesVersions": 
-  {
-    "*": {
-      "*": [
-        "lib/*"
-      ]
-    }
-  },
+  "main": "./main.js",
   "scripts": {
     "test": "jest",
     "build": "tsc"

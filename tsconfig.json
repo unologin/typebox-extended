@@ -4,7 +4,7 @@
     "target": "ES6",
     "module": "commonjs",
     "declaration": true,
-    "outDir": "./lib",
+    "outDir": "./",
     "strict": true,
     "esModuleInterop": true,
     "allowJs": false
