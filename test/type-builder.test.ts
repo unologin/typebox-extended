@@ -1,5 +1,5 @@
 
-import ExtendedTypeBuilder, { TUserDefined } from '../src/main';
+import ExtendedTypeBuilder from '../src/main';
 
 import { Static } from '@sinclair/typebox';
 
@@ -44,7 +44,8 @@ test('user defined types', () =>
   
   const obj = Type.Object(
     {
-      t: {} as unknown as TUserDefined<UserDef>,
+      // any type can be passed
+      t: Type.UserDefined<UserDef>(Type.Number()),
     },
   );
 

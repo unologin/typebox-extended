@@ -1,5 +1,5 @@
 
-import { TypeBuilder } from '@sinclair/typebox';
+import { TSchema, TypeBuilder } from '@sinclair/typebox';
 
 // type Last<T extends any[]> = T extends [...infer I, infer L] ? L : never; 
 
@@ -8,6 +8,8 @@ export type TypeBuilderConfig =
   // [T in keyof TypeBuilder]: Partial<Last<Parameters<TypeBuilder[T]>>>;
   [T in keyof TypeBuilder]?: object;
 }
+
+export type TUserDefined<T> = { $static: T }; 
 
 /** */
 export default class ExtendedTypeBuilder
@@ -28,13 +30,21 @@ export default class ExtendedTypeBuilder
       {
         // function.length stops counting at the first parameter with a default value
         // this assumes that the options are always the first optional parameter...
-        args[orig.length] = { ...opts, ...args[args.length - 1] };
-
+        args[orig.length] = { ...opts, ...args[orig.length] };
+        
         return orig.call(this, ...args);
       };
     }
   }
-}
 
-// can be used to force Static<typeof schema> to produce a specific type
-export type TUserDefined<T> = { $static: T }; 
+  /**
+   * Can be used to force Static<typeof schema> to produce a specific type.
+   * Useful for validators like AJV that allow for type conversions.
+   * @param schema the schema
+   * @returns the schema
+   */
+  public UserDefined<T>(schema: TSchema)
+  {
+    return schema as unknown as TUserDefined<T>;
+  }
+}

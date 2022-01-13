@@ -6,6 +6,18 @@
   "files": [
     "lib/"
   ],
+  "exports": 
+  {
+    "./typebox": "./lib/typebox.js"
+  },
+  "typesVersions": 
+  {
+    "*": {
+      "*": [
+        "lib/*"
+      ]
+    }
+  },
   "scripts": {
     "test": "jest",
     "build": "tsc"
