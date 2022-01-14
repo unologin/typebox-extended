@@ -1,6 +1,6 @@
 node_modules/
-./main.js
-./main.d.ts
-./typebox.js
-./typebox.d.ts
+main.js
+main.d.ts
+typebox.js
+typebox.d.ts
 coverage/
