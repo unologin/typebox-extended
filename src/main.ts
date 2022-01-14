@@ -43,7 +43,7 @@ export default class ExtendedTypeBuilder
    * @param schema the schema
    * @returns the schema
    */
-  public UserDefined<T>(schema: TSchema)
+  public UserDefined<T>(schema?: TSchema)
   {
     return schema as unknown as TUserDefined<T>;
   }
