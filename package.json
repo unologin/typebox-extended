@@ -5,7 +5,8 @@
   "main": "./main.js",
   "scripts": {
     "test": "jest",
-    "build": "tsc"
+    "build": "tsc",
+    "install": "[ -d ./main.d.ts ] && npm run build"
   },
   "repository": {
     "type": "git",
