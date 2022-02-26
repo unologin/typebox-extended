@@ -24,9 +24,9 @@
   },
   "homepage": "https://github.com/unologin/typebox-extended#readme",
   "peerDependencies": {
-    "@sinclair/typebox": "^0.23.2"
   },
   "devDependencies": {
+    "@sinclair/typebox": "^0.23.2",
     "@alex_neo/jest-expect-message": "^1.0.5",
     "@types/jest": "^27.4.0",
     "@typescript-eslint/eslint-plugin": "^5.9.1",
