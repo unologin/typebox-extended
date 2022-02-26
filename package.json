@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest",
     "build": "tsc",
-    "install": "[ -d ./main.d.ts ] && npm run build"
+    "install": "[ ! -f ./main.d.ts ] && npm run build || true"
   },
   "repository": {
     "type": "git",
