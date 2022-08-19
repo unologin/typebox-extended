@@ -1,6 +1,6 @@
 {
   "name": "@unologin/typebox-extended",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Extensions to @sinclair/typebox.",
   "main": "./main.js",
   "scripts": {
