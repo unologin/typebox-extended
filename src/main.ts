@@ -9,7 +9,7 @@ export type TypeBuilderConfig =
   [T in keyof TypeBuilder]?: object;
 }
 
-export type TUserDefined<T> = { $static: T }; 
+export type TUserDefined<T> = TSchema & { $static: T }; 
 
 /** */
 export default class ExtendedTypeBuilder

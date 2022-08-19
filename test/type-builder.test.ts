@@ -1,7 +1,7 @@
 
-import ExtendedTypeBuilder from '../src/main';
+import ExtendedTypeBuilder, { TUserDefined } from '../src/main';
 
-import { Static } from '@sinclair/typebox';
+import { Static, TSchema } from '@sinclair/typebox';
 
 const Type = new ExtendedTypeBuilder(
   {
@@ -55,3 +55,14 @@ test('user defined types', () =>
 
   f(testObj);
 });
+
+test('TUserDefined is TSchema', () => 
+{
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const fn = (s : TSchema) => null;
+
+  const a = {} as any as TUserDefined<Date>;
+
+  fn(a);
+});
+
