@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "Extensions to @sinclair/typebox.",
   "main": "./main.js",
+  "private": false,
   "scripts": {
     "test": "jest",
     "build": "tsc && cp package.json lib/"
