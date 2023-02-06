@@ -79,6 +79,57 @@ describe('processed types', () =>
     expect((input.ids[0] as any) instanceof ObjectId).toBe(true);
   });
 
+  it('Date', () => 
+  {
+    // processed types need to be wrapped in an object or array
+    const validate = ajv.compile(
+      Type.Object(
+        { 
+          date: ajv.commonSchemas.date,
+        },
+      ),
+    );
+
+    const cases = 
+    [
+      {
+        inp: '2023-02-06T14:53:08.257Z',
+        out: new Date('2023-02-06T14:53:08.257Z'),
+      },
+      {
+        inp: 1675695496436,
+        out: new Date(1675695496436),
+      },
+      {
+        inp: 'invalid date',
+      },
+    ];
+
+    for (const { inp, out } of cases)
+    {
+      const data = { date: inp };
+      
+      validate(data);
+
+      if (out)
+      {
+        expect(data.date)
+          .toStrictEqual(out);
+
+        expect(data.date)
+          .toBeInstanceOf(Date);
+
+        expect(validate.errors)
+          .toBeFalsy();
+      }
+      else 
+      {
+        expect(validate.errors?.[0])
+          .toBeTruthy();
+      }
+    }
+  });
+
   it('ObjectId cannot be empty or malformed', () =>
   {
     // processed types need to be wrapped in an object or array

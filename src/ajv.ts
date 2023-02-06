@@ -22,7 +22,22 @@ export default class AjvExtended
 
     date: this.createProcessedType(
       'Date',
-      (d) => new Date(d),
+      (str) => 
+      {
+        const d = new Date(str);
+
+        if (!isNaN(d.getTime()))
+        {
+          return d;
+        }
+        else 
+        {
+          throw new Error('Invalid date');
+        }
+      },
+      Type.Union(
+        [Type.Number(), Type.String()],
+      ),
     ),
 
     varname: Type.String(

@@ -14,7 +14,15 @@ class AjvExtended extends ajv_1.default {
         super(...arguments);
         this.commonSchemas = {
             objectId: this.createProcessedType('ObjectId', (str) => new mongodb_1.ObjectId(str)),
-            date: this.createProcessedType('Date', (d) => new Date(d)),
+            date: this.createProcessedType('Date', (str) => {
+                const d = new Date(str);
+                if (!isNaN(d.getTime())) {
+                    return d;
+                }
+                else {
+                    throw new Error('Invalid date');
+                }
+            }, typebox_1.Type.Union([typebox_1.Type.Number(), typebox_1.Type.String()])),
             varname: typebox_1.Type.String({
                 $id: '#/varname',
                 type: 'string',
