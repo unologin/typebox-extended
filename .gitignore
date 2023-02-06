@@ -4,3 +4,4 @@ main.d.ts
 typebox.js
 typebox.d.ts
 coverage/
+.vscode

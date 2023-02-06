@@ -49,7 +49,8 @@ test('user defined types', () =>
     },
   );
 
-  type T = Static<typeof obj>['t'];
+  type Obj = Static<typeof obj>;
+  type T = Obj['t'];
 
   const testObj : T = { a: 1, b: new Date() };
 
