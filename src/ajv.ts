@@ -1,103 +1,45 @@
 
 import Ajv from 'ajv';
-import { TSchema } from '@sinclair/typebox';
-import { Type } from './typebox';
-import { ObjectId } from 'mongodb';
 
-export type TypeBuilderMethod = 
-  (...args : any) => TSchema;
+import * as commonSchemas from './common';
+import { Type } from './typebox';
 
 /**
- * Adds functionality to ajv 
+ * Adds functionality to ajv.
+ * TODO: Export a plugin instead.
  */
 export default class AjvExtended 
   extends Ajv
 {
-  public commonSchemas = 
+  /** @deprecated alias for {@link common} */
+  public commonSchemas = commonSchemas;
+
+  /** */
+  constructor(...args : Parameters<typeof Ajv>)
   {
-    objectId: this.createProcessedType(
-      'ObjectId',
-      (str) => new ObjectId(str),
-    ),
+    super(...args);
 
-    date: this.createProcessedType(
-      'Date',
-      (str) => 
-      {
-        const d = new Date(str);
-
-        if (!isNaN(d.getTime()))
-        {
-          return d;
-        }
-        else 
-        {
-          throw new Error('Invalid date');
-        }
-      },
-      Type.Union(
-        [Type.Number(), Type.String()],
-      ),
-    ),
-
-    varname: Type.String(
-      {
-        $id: '#/varname',
-        type: 'string',
-        pattern: '[a-zA-Z_][0-9a-zA-Z_]*',
-      },
-    ),
-
-    url: Type.String(
-      {
-        $id: '#/url',
-        format: 'uri',
-      },
-    ),
-
-    httpUrl: this.createProcessedType(
-      'httpUrl',
-      (str) => 
-      {
-        const url = new URL(str);
-
-        if (
-          url.protocol !== 'http:' &&
-          url.protocol !== 'https:'
-        )
-        {
-          throw new Error('Invalid protocol for http(s) url.');
-        }
-
-        return url.href;
-      },
-    ),
+    Object.entries(
+      commonSchemas.processors,
+    ).forEach(
+      ([name, processor]) => this.addProcessor(name, processor),
+    );
   }
 
   /**
-   * Creates schema with sync. param processor.
-   * This creates a schema of type "string" (by default), 
-   * instances of which will be replaced using the process function.
-   * 
-   * This is used to facilitate parsing things like Date, ObjectId etc. from a string representation.
-   * 
-   * 
-   * @param name unique name
-   * @param process processor function
-   * @param options optional schema options
-   * @param typeBuilderMethod type builder method
-   * @returns type with processor
-  */
-  createProcessedType<T, Builder extends TypeBuilderMethod>(
-    name: string,
-    process: (value: string) => T,
-    options?: Parameters<Builder>,
-    typeBuilderMethod : TypeBuilderMethod = Type.String,
+   * Add a new keyword processor to either add custom validation logic or to convert types.
+   * @param name name
+   * @param process process function
+   * @returns void
+   */
+  addProcessor<From, To>(
+    name : string,
+    process: (value: From) => To,
   )
   {
     this.addKeyword(
       // add the name as a new keyword 
-      // the name will later appear as  { [name]: true } in the schema
+      // the name must later appear as  { [name]: true } in the schema
       name, 
       {
         compile: () => 
@@ -128,18 +70,31 @@ export default class AjvExtended
         },
       },
     );
-  
-    return Type.UserDefined<T>(
-      typeBuilderMethod.apply(
-        Type,
-        [
-          {
-            // name must be the same as the keyword registered above
-            [name]: true,
-            ...options, 
-          },
-        ],
-      ),
+  }
+
+  /**
+   * @deprecated alias of {@link createProcessedType}
+   * 
+   * @param name unique name
+   * @param process processor function
+   * @param options options 
+   * @param typeBuilderMethod type builder 
+   * @returns schema
+   */
+  createProcessedType<T, Builder extends commonSchemas.TypeBuilderMethod>(
+    name : string,
+    process: (value: string) => T,
+    options?: Parameters<Builder>,
+    typeBuilderMethod : commonSchemas.TypeBuilderMethod = Type.String,
+  )
+  {
+    this.addProcessor(name, process);
+
+    return commonSchemas.createProcessedType(
+      name,
+      process,
+      options,
+      typeBuilderMethod,
     );
   }
 }

@@ -3,6 +3,7 @@ import AjvExtended from '../src/ajv';
 
 import { Type } from '../src/typebox';
 import { ObjectId } from 'mongodb';
+import { createProcessedType } from '../src/common';
 
 // configure the schema validator
 const ajv = new AjvExtended(
@@ -235,5 +236,18 @@ describe('processed types', () =>
 
       expect(validate.errors?.length).toBe(1);
     }
+  });
+});
+
+describe('common.createProcessedType', () => 
+{
+  test('cannot register same name twice', () => 
+  {
+    createProcessedType('myType', () => null);
+
+    expect(
+      () => createProcessedType('myType', () => null),
+    ).toThrow(Error);
+    
   });
 });

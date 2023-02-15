@@ -14,8 +14,10 @@ export default class ExtendedTypeBuilder extends TypeBuilder {
     /**
      * Can be used to force Static<typeof schema> to produce a specific type.
      * Useful for validators like AJV that allow for type conversions.
+     * @see {@link ajv}
+     *
      * @param schema the schema
-     * @returns the schema
+     * @returns the schema but with a different type
      */
     UserDefined<T>(schema?: TSchema): TUserDefined<T>;
 }
