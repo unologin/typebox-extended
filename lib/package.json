@@ -2,7 +2,7 @@
   "name": "@unologin/typebox-extended",
   "version": "0.2.0",
   "description": "Extensions to @sinclair/typebox.",
-  "main": "./main.js",
+  "main": "./lib/main.js",
   "private": false,
   "scripts": {
     "test": "jest",
